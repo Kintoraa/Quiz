@@ -72,11 +72,16 @@ const pageFinal = () => {
   document.querySelector("body").innerHTML = `
 <div class="container">
       <h1> Quiz terminée !</h1>
-       <p id="progress">Votre score est de ${scoreQuiz}/${questions.length}
+       <p id="progress">Votre score est de ${scoreQuiz}/${questions.length}</p>
+       <button id="reloadBtn">Recommencer</button>
 </div>
   `;
+  indexQuiz = 0;
   progressQuiz = 1;
   scoreQuiz = 0;
+
+  reloadBtn.addEventListener("click", () => location.reload());
+
 };
 
 // Systeme de changement de Quizz
@@ -103,6 +108,10 @@ btn.forEach((btn) => {
     }
   });
 });
+
+// Bouton pour recommencer le Quiz
+
+
 
 displayResult();
 displayQuestion();
