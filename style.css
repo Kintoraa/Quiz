@@ -35,7 +35,7 @@ body .container .choices {
 }
 body .container .choices button {
   flex: 1 0 45%;
-  width: 200px;
+  max-width: 400px;
   height: 80px;
   border-radius: 5px;
   cursor: pointer;
