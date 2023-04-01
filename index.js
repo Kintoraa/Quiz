@@ -11,9 +11,6 @@ class Question {
     this.choice = choices;
     this.response = response;
   }
-  isCorrect(choice) {
-    return choice === this.response;
-  }
 }
 
 const questions = [
@@ -38,34 +35,34 @@ const questions = [
     "Math.round()"
   ),
   new Question(
-      "Quel est le langage de programmation le plus utilisé ?",
-      ["Java", "Python", "Swift", "JavaScript"],
-      "JavaScript"
+    "Quel est le langage de programmation le plus utilisé ?",
+    ["Java", "Python", "Swift", "JavaScript"],
+    "JavaScript"
   ),
 
   new Question(
-      "Lequel d'entre eux n'ait pas un langage de programmation",
-      ["Php", "Ruby", "HTML", "C++"],
-      "HTML"
-  )
+    "Lequel d'entre eux n'ait pas un langage de programmation",
+    ["Php", "Ruby", "HTML", "C++"],
+    "HTML"
+  ),
 ];
 
 // Affichage des questions
 
 const displayQuestion = (e) => {
   quizQuestion.textContent = questions[indexQuiz].text;
-  choice0.textContent = questions[indexQuiz].choice[0];
-  choice1.textContent = questions[indexQuiz].choice[1];
-  choice2.textContent = questions[indexQuiz].choice[2];
-  choice3.textContent = questions[indexQuiz].choice[3];
+
+  for (let i = 0; i < questions[indexQuiz].choice.length; i++) {
+    const choice = document.getElementById(`choice${i}`);
+    choice.textContent = questions[indexQuiz].choice[i];
+  }
   progress.textContent = `Question : ${progressQuiz}/${questions.length}`;
 };
 
 // Affichage du Résultat
 const displayResult = () => {
   score.textContent = scoreQuiz + " Points";
-}
-
+};
 
 // Affichage de la page de Résultat
 const pageFinal = () => {
@@ -80,8 +77,8 @@ const pageFinal = () => {
   progressQuiz = 1;
   scoreQuiz = 0;
 
+  // Bouton recommencer
   reloadBtn.addEventListener("click", () => location.reload());
-
 };
 
 // Systeme de changement de Quizz
@@ -89,7 +86,7 @@ btn.forEach((btn) => {
   btn.addEventListener("click", (e) => {
     if (questions[indexQuiz].response === e.target.innerText) {
       scoreQuiz++;
-      displayResult()
+      displayResult();
     }
 
     if (indexQuiz === questions.length - 1) {
@@ -108,10 +105,6 @@ btn.forEach((btn) => {
     }
   });
 });
-
-// Bouton pour recommencer le Quiz
-
-
 
 displayResult();
 displayQuestion();
