@@ -37,6 +37,17 @@ const questions = [
     ["Math.ceil()", "Math.floor()", "Math.round()", "Math.random()"],
     "Math.round()"
   ),
+  new Question(
+      "Quel est le langage de programmation le plus utilisé ?",
+      ["Java", "Python", "Swift", "JavaScript"],
+      "JavaScript"
+  ),
+
+  new Question(
+      "Lequel d'entre eux n'ait pas un langage de programmation",
+      ["Php", "Ruby", "HTML", "C++"],
+      "HTML"
+  )
 ];
 
 // Affichage des questions
@@ -47,7 +58,7 @@ const displayQuestion = (e) => {
   choice1.textContent = questions[indexQuiz].choice[1];
   choice2.textContent = questions[indexQuiz].choice[2];
   choice3.textContent = questions[indexQuiz].choice[3];
-  progress.textContent = "Question : " + progressQuiz + "/4";
+  progress.textContent = `Question : ${progressQuiz}/${questions.length}`;
 };
 
 // Affichage du Résultat
@@ -61,7 +72,7 @@ const pageFinal = () => {
   document.querySelector("body").innerHTML = `
 <div class="container">
       <h1> Quiz terminée !</h1>
-       <p id="progress">Votre score est de ${scoreQuiz}/4
+       <p id="progress">Votre score est de ${scoreQuiz}/${questions.length}
 </div>
   `;
   progressQuiz = 1;
@@ -76,7 +87,7 @@ btn.forEach((btn) => {
       displayResult()
     }
 
-    if (indexQuiz === 3) {
+    if (indexQuiz === questions.length - 1) {
       pageFinal();
       return;
     }
