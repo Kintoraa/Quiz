@@ -1,9 +1,9 @@
-let array = [];
 const btn = document.querySelectorAll(".btn");
-const quizzQuestion = document.getElementById("question");
+const quizQuestion = document.getElementById("question");
 const score = document.getElementById("score");
-let scoreQuizz = 0;
-let progressQuizz = 1; // Essayer de faire une fonction dynamique
+let scoreQuiz = 0;
+let progressQuiz = 1;
+let indexQuiz = 0;
 
 class Question {
   constructor(text, choices, response) {
@@ -39,100 +39,59 @@ const questions = [
   ),
 ];
 
-const firstQuestion = (e) => {
-  quizzQuestion.textContent = questions[0].text;
-  score.textContent = scoreQuizz + " Points";
-  choice0.textContent = questions[0].choice[0];
-  choice1.textContent = questions[0].choice[1];
-  choice2.textContent = questions[0].choice[2];
-  choice3.textContent = questions[0].choice[3];
-  progress.textContent = "Question : " + progressQuizz + "/4";
+// Affichage des questions
+
+const displayQuestion = (e) => {
+  quizQuestion.textContent = questions[indexQuiz].text;
+  choice0.textContent = questions[indexQuiz].choice[0];
+  choice1.textContent = questions[indexQuiz].choice[1];
+  choice2.textContent = questions[indexQuiz].choice[2];
+  choice3.textContent = questions[indexQuiz].choice[3];
+  progress.textContent = "Question : " + progressQuiz + "/4";
 };
 
-const twoQuestion = (e) => {
-  quizzQuestion.textContent = questions[1].text;
-  choice0.textContent = questions[1].choice[0];
-  choice1.textContent = questions[1].choice[1];
-  choice2.textContent = questions[1].choice[2];
-  choice3.textContent = questions[1].choice[3];
-  progress.textContent = "Question : " + progressQuizz + "/4";
-};
+// Affichage du Résultat
+const displayResult = () => {
+  score.textContent = scoreQuiz + " Points";
+}
 
-const threeQuestion = (e) => {
-  quizzQuestion.textContent = questions[2].text;
-  choice0.textContent = questions[2].choice[0];
-  choice1.textContent = questions[2].choice[1];
-  choice2.textContent = questions[2].choice[2];
-  choice3.textContent = questions[2].choice[3];
-  progress.textContent = "Question : " + progressQuizz + "/4";
 
-  if (questions[2].response === e) {
-    scoreQuizz++;
-    score.textContent = scoreQuizz + " Points";
-  }
-};
-
-const fourQuestion = (e) => {
-  quizzQuestion.textContent = questions[3].text;
-  choice0.textContent = questions[3].choice[0];
-  choice1.textContent = questions[3].choice[1];
-  choice2.textContent = questions[3].choice[2];
-  choice3.textContent = questions[3].choice[3];
-  progress.textContent = "Question : " + progressQuizz + "/4";
-
-  if (questions[3].response === e) {
-    scoreQuizz++;
-    score.textContent = scoreQuizz + " Points";
-  }
-};
-
+// Affichage de la page de Résultat
 const pageFinal = () => {
   document.querySelector("body").innerHTML = `
 <div class="container">
       <h1> Quiz terminée !</h1>
-       <p id="progress">Votre score est de ${scoreQuizz}/4
+       <p id="progress">Votre score est de ${scoreQuiz}/4
 </div>
   `;
-  progressQuizz = 1;
-  scoreQuizz = 0;
+  progressQuiz = 1;
+  scoreQuiz = 0;
 };
 
-firstQuestion();
-
+// Systeme de changement de Quizz
 btn.forEach((btn) => {
   btn.addEventListener("click", (e) => {
-    if (questions[0].response === e.target.innerText) {
-      scoreQuizz++;
-      score.textContent = scoreQuizz + " Points";
+    if (questions[indexQuiz].response === e.target.innerText) {
+      scoreQuiz++;
+      displayResult()
     }
 
-    if (questions[1].response === e.target.innerText) {
-      scoreQuizz++;
-      score.textContent = scoreQuizz + " Points";
-      console.log("test2");
-    }
-    if (questions[2].response === e.target.innerText) {
-      scoreQuizz++;
-      score.textContent = scoreQuizz + " Points";
-      console.log("test2");
-    }
-    if (questions[3].response === e.target.innerText) {
-      scoreQuizz++;
-      score.textContent = scoreQuizz + " Points";
-      console.log("test2");
-    }
-
-    if (progressQuizz === 1) {
-      progressQuizz++;
-      twoQuestion(e.target.innerText);
-    } else if (progressQuizz === 2) {
-      progressQuizz++;
-      threeQuestion(e.target.innerText);
-    } else if (progressQuizz === 3) {
-      progressQuizz++;
-      fourQuestion(e.target.innerText);
-    } else if (progressQuizz === 4) {
+    if (indexQuiz === 3) {
       pageFinal();
+      return;
+    }
+
+    if (indexQuiz === 0) {
+      indexQuiz++;
+      progressQuiz++;
+      displayQuestion();
+    } else if (indexQuiz > 0) {
+      indexQuiz++;
+      progressQuiz++;
+      displayQuestion();
     }
   });
 });
+
+displayResult();
+displayQuestion();
