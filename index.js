@@ -81,12 +81,27 @@ const pageFinal = () => {
   reloadBtn.addEventListener("click", () => location.reload());
 };
 
+
+const ringFalse =() => {
+  const audio = new Audio()
+  audio.src = "./assets/sound/4125.mp3"
+  audio.play();
+}
+
+const ringTrue =() => {
+  const audio = new Audio()
+  audio.src = "./assets/sound/2041.mp3"
+  audio.play();
+}
 // Systeme de changement de Quizz
 btn.forEach((btn) => {
   btn.addEventListener("click", (e) => {
     if (questions[indexQuiz].response === e.target.innerText) {
       scoreQuiz++;
+      ringTrue();
       displayResult();
+    } else {
+      ringFalse();
     }
 
     if (indexQuiz === questions.length - 1) {
